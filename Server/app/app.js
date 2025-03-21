@@ -12,6 +12,8 @@ app.set("port", port); // Establecer el puerto
 
 // Rutas de la app
 app.use('/api/users', require('./routes/users.routes'));
+app.use('/api/athletes', require('./routes/athletes.routes'));
+app.use('/api/competitions', require('./routes/competitions.routes'));
 
 // Middleware para manejar rutas no encontradas y devolver error 404
 app.use((req, res) => {
