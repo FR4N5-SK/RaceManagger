@@ -22,3 +22,8 @@ Contiene los siguientes cambios...
 - Desarrollo de los endpoints CRUD para las Competencias en sus diferentes disciplinas (Backend).
 - Desarrollo de los endpoints CRUD para los Torneos en sus diferentes disciplinas (Backend).
 - Completamos el panel de administración Básico
+
+Vesion V1.2:
+Contiene los siguientes cambios...
+
+- Agregamos el archivo de la base de datos Mysql
