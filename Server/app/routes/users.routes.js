@@ -6,5 +6,7 @@ const usersController = require('../controllers/users.controller');
 router.post('/register', usersController.add); // Ruta para crear un nuevo usuario
 router.post('/login', usersController.login); // Ruta para iniciar sesión
 router.post('/repair-password', usersController.repairPassword); // Recuperar Contraseña de un usuario
+router.get('/all', usersController.all); // Recuperar Contraseña de un usuario
+router.delete('/delete/:id', usersController.delete); // Recuperar Contraseña de un usuario
 
 module.exports = router;

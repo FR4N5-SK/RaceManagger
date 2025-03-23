@@ -8,7 +8,7 @@ export default function ProtectedRoute({
   adminComponent: AdminComponent,
 }) {
   const navigate = useNavigate();
-  const { token } = useContext(Context);
+  const { token, admin } = useContext(Context);
   const location = useLocation(); // Obtener la información de la ubicación actual
   const currentPath = location.pathname; // Acceder a la ruta actual
 
@@ -50,7 +50,7 @@ export default function ProtectedRoute({
 
   return (
     <>
-      {token === "Invalid" ? (<DefaultComponent />) : (<UserComponent />) }
+      {token === "Invalid" ? (<DefaultComponent />) : (admin ? (<AdminComponent />) : (<UserComponent />)) }
     </>
   );
 }

@@ -16,27 +16,27 @@ class UsersModel {
     }
   }
 
-  // Obtener todos los administradores
+  // Obtener todos los Usuarios
   async getAll() {
-    const sql = 'SELECT * FROM admins';
+    const sql = 'SELECT * FROM users';
     try {
-      const admins = await query(sql);
-      return admins;
+      const users = await query(sql);
+      return users;
     } catch (error) {
-      console.log('Hubo un error al obtener los administradores:', error);
+      console.log('Hubo un error al obtener los Usuarios:', error);
       throw error;
     }
   }
 
   // Obtener un administrador por su ID
   async getById(id) {
-    const sql = `SELECT * FROM admins WHERE id = ?`;
+    const sql = `SELECT * FROM users WHERE id_user = ?`;
     const values = [id];
     try {
-      const [admin] = await query(sql, values);
-      return admin;
+      const [user] = await query(sql, values);
+      return user;
     } catch (error) {
-      console.log(`Hubo un error al obtener el administrador con ID ${id}:`, error);
+      console.log(`Hubo un error al obtener el usuario con ID ${id}:`, error);
       throw error;
     }
   }
@@ -69,13 +69,16 @@ class UsersModel {
 
   // Eliminar un administrador por su ID
   async deleteById(id) {
-    const sql = 'DELETE FROM admins WHERE id = ?';
+    const sql = 'DELETE FROM users WHERE id_user = ?';
     const values = [id];
     try {
       const response = await query(sql, values);
-      return response.affectedRows > 0;
+      if (response.affectedRows > 0) {
+        return id;
+      }
+      return false;
     } catch (error) {
-      console.log(`Hubo un error al eliminar el administrador con ID ${id}:`, error);
+      console.log(`Hubo un error al eliminar el Usuario con ID ${id}:`, error);
       throw error;
     }
   }

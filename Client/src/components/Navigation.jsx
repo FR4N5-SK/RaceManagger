@@ -63,7 +63,7 @@ export default function Navigation() {
         >
           <ul className="flex-col h-full flex lg:flex-row items-center justify-center gap-4 font-semibold text-sm text-black">
             <li>
-              <Link className="hover:text-naranja-brillante duration-300 transition-all">
+              <Link to={"/inicio"} className="hover:text-naranja-brillante duration-300 transition-all">
                 Inicio
               </Link>
             </li>
@@ -79,7 +79,7 @@ export default function Navigation() {
             </li>
             {admin ? (
               <li>
-                <Link className="hover:text-naranja-brillante duration-300 transition-all">
+                <Link to={"/admin"} className="hover:text-naranja-brillante duration-300 transition-all">
                   Administrador
                 </Link>
               </li>

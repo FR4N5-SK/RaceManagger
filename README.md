@@ -4,7 +4,7 @@
 
 ## Versiones
 
-* Version V1.0:
+Version V1.0:
 Contiene los siguientes cambios...
 
 - Instalación y configuración del proyecto en React Vite (Frontend).
@@ -12,3 +12,13 @@ Contiene los siguientes cambios...
 - Desarrollo de la Landing Page (Frontend).
 - Instalación y Configuración de la API REST en Node.js y Express que consumirá el sistema (Backend).
 - Desarrollo del Registro y Gestion de sesiones de usuarios (Backend).
+
+Version V1.1:
+Contiene los siguientes cambios...
+
+- Desarrollo del Panel de Administrador, funcionalidad CRUD de  Torneos (Frontend).
+- Desarrollo del Panel de Administrador, funcionalidad CRUD de  Competencias (Frontend).
+- Desarrollo de los endpoints CRUD para registrar atletas con todos sus datos (Backend).
+- Desarrollo de los endpoints CRUD para las Competencias en sus diferentes disciplinas (Backend).
+- Desarrollo de los endpoints CRUD para los Torneos en sus diferentes disciplinas (Backend).
+- Completamos el panel de administración Básico
