@@ -122,6 +122,9 @@ export default function EditAthlete({athlete}) {
             <TESelect
               data={sex}
               name="sex"
+              value={values.sex}
+              preventFirstSelection
+              label="Sexo"
               onValueChange={(e) => {
                 setValues({
                   ...values,
@@ -129,7 +132,6 @@ export default function EditAthlete({athlete}) {
                 });
               }}
             />
-            <span className="text-[9px] w-full text-start text-neutral-400">* Su sexo definido anteriormente es: {athlete.sex_athlete}</span>
           </div>
         </div>
         <div>
@@ -146,6 +148,9 @@ export default function EditAthlete({athlete}) {
             data={nations}
             search
             name="nation"
+            value={values.nation}
+            preventFirstSelection
+            label="Nacionalidad"
             onValueChange={(e) => {
               setValues({
                 ...values,
@@ -153,7 +158,6 @@ export default function EditAthlete({athlete}) {
               });
             }}
           />
-          <span className="text-[9px] w-full text-start text-neutral-400">* Su nacionalidad anterior es: {athlete.nation_athlete}</span>
         </div>
 
         <TERipple rippleColor="white" className="w-full flex justify-start">

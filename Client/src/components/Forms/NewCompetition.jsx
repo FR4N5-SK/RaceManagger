@@ -4,12 +4,14 @@ import { useContext, useState } from "react";
 import formValidation from "../../validations/formValidation";
 import { alertInfo } from "../../alerts/alerts";
 import { Context } from "../../context/Context";
+import { useEffect } from "react";
 
 export default function NewCompetition({setModal}) {
-  const { peticionAddCompetition } = useContext(Context);
+  const { peticionAddCompetition, categories } = useContext(Context);
 
   const [values, setValues] = useState({
     name: "",
+    categorie: "",
     type: "",
     discipline: "",
     dateStart: "",
@@ -18,8 +20,25 @@ export default function NewCompetition({setModal}) {
     description: "",
     mode: "",
     participants: "",
+    eliminated: "",
     rounds: ""
   });
+  const [catOpt, setCatOpt] = useState([])
+
+  useEffect(() => {
+    const load = (e) => {
+      let newCats = []
+      categories.forEach(cat => {
+        newCats.push({
+          text: cat.name_categorie,
+          value: cat.name_categorie
+        })
+      });
+      setCatOpt(newCats)
+    };
+    
+    load()
+  }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -96,6 +115,8 @@ export default function NewCompetition({setModal}) {
           <TESelect
             data={types}
             name="type"
+            clearBtn
+            preventFirstSelection
             onValueChange={(e) => {
               setValues({
                 ...values,
@@ -107,8 +128,25 @@ export default function NewCompetition({setModal}) {
         </div>
         <div>
           <TESelect
+            data={catOpt}
+            name="categories"
+            clearBtn
+            preventFirstSelection
+            onValueChange={(e) => {
+              setValues({
+                ...values,
+                ["categorie"]: e.value,
+              });
+            }}
+            label="Categorías"
+          />
+        </div>
+        <div>
+          <TESelect
             data={disciplines}
             name="discipline"
+            clearBtn
+            preventFirstSelection
             onValueChange={(e) => {
               setValues({
                 ...values,
@@ -156,6 +194,8 @@ export default function NewCompetition({setModal}) {
             <TESelect
               data={modes}
               name="mode"
+              clearBtn
+              preventFirstSelection
               onValueChange={(e) => {
                 setValues({
                   ...values,
@@ -176,15 +216,41 @@ export default function NewCompetition({setModal}) {
             ></TEInput>
           </div>
         </div>
-        <div>
-          <TEInput
-            min={0}
-            type="number"
-            name="rounds"
-            value={values.rounds}
-            onChange={handleInputChange}
-            label="Rondas"
-          ></TEInput>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <TEInput
+              min={0}
+              type="number"
+              name="rounds"
+              value={values.rounds}
+              onChange={handleInputChange}
+              label="Rondas"
+            ></TEInput>
+          </div>
+          {values.mode === "Eliminación Directa" ? (
+            <div>
+              <TEInput
+                min={0}
+                type="number"
+                name="eliminated"
+                value={values.eliminated}
+                onChange={handleInputChange}
+                label="Eliminar por Ronda"
+              ></TEInput>
+            </div>
+          ) : (
+            <div>
+              <TEInput
+                min={0}
+                disabled
+                type="number"
+                name="eliminated"
+                value={values.eliminated}
+                onChange={handleInputChange}
+                label="Eliminar por Ronda"
+              ></TEInput>
+            </div>
+          )}
         </div>
         <div>
           <TEInput

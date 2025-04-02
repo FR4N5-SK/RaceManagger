@@ -18,6 +18,9 @@ export default function CardCompetition({competition}) {
         <b>Modalidad: </b> {competition.mode_competition}
       </p>
       <p className="mb-1 text-sm text-start text-neutral-900 text-wrap">
+        <b>Categoría: </b> {competition.categorie_competition}
+      </p>
+      <p className="mb-1 text-sm text-start text-neutral-900 text-wrap">
         <b>Fecha de Inicio: </b> {dateStart[0]} {dateStart[1]}
       </p>
       <p className="mb-1 text-sm text-start text-neutral-900 text-wrap">
@@ -39,6 +42,15 @@ export default function CardCompetition({competition}) {
           <b>Disciplina: </b> {competition.discipline_competition}
         </p>
       </div>
+      {competition.mode_competition === "Eliminación Directa" ? (
+        <div className="grid grid-cols-2">
+          <p className="mb-1 text-sm text-start text-neutral-900 text-wrap">
+            <b>Elimados por Ronda: </b> {competition.eliminated_competition}
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

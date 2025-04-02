@@ -10,7 +10,7 @@ import EditCompetition from "../../components/Forms/EditCompetition";
 import CardCompetition from "../../components/cards/CardCompetition";
 
 export default function AdminCompetitions() {
-  const { loading, setLoading, peticionAllCompetitions, competitions, peticionDeleteCompetition } =
+  const { loading, setLoading, peticionAllCompetitions, competitions, peticionDeleteCompetition, peticionAllCategories } =
     useContext(Context);
 
   const [pagina, setPagina] = useState(1);
@@ -23,6 +23,7 @@ export default function AdminCompetitions() {
       setLoading(true);
       setTimeout(() => {
         peticionAllCompetitions();
+        peticionAllCategories();
       }, 1000);
     };
     load();

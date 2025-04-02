@@ -5,6 +5,7 @@ const endpoints = {
     allAthletes: "http://localhost:3062/api/athletes/all",
     allCompetitions: "http://localhost:3062/api/competitions/all",
     allUsers: "http://localhost:3062/api/users/all",
+    allCategories: "http://localhost:3062/api/categories/all",
     AddAthletes: "http://localhost:3062/api/athletes/add",
     EditAthletes: "http://localhost:3062/api/athletes/edit/",
     DeleteAthletes: "http://localhost:3062/api/athletes/delete/",

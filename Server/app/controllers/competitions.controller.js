@@ -1,10 +1,12 @@
 const competitionsModel = require("../models/competitons.model"); // Importamos el modelo de administradores
+const categoriesModel = require('../models/categories.model');
 
 class CompetitionsController {
   // Crear un nueva Competition (Terminada)
   async add(req, res) {
     try {
       const {
+        categorie,
         name,
         type,
         discipline,
@@ -15,12 +17,15 @@ class CompetitionsController {
         mode,
         participants,
         rounds,
+        eliminated,
         results = {
           podio: "No definido",
         },
       } = req.body;
 
       if (
+        !categorie ||
+        !eliminated ||
         !name ||
         !type ||
         !discipline ||
@@ -36,6 +41,14 @@ class CompetitionsController {
         return res.status(401).json({
           status: 401,
           message: "Faltan propiedades escenciales para crear la competición.",
+        });
+      }
+
+      const categorieView = await categoriesModel.getByName(categorie);
+      if (categorieView === undefined) {
+        return res.status(401).json({
+          status: 401,
+          message: "La Categoria no existe",
         });
       }
 
@@ -71,6 +84,7 @@ class CompetitionsController {
 
       // Creamos la nueva competicion:
       let newCompetition = {
+        categorie: categorie,
         name: name,
         type: type,
         discipline: discipline,
@@ -80,9 +94,15 @@ class CompetitionsController {
         description: description,
         mode: mode,
         participants: Number(participants),
+        eliminated: Number(eliminated),
         rounds: Number(rounds),
         results: JSON.stringify(results),
       };
+
+      
+      if (mode == "Liga" || mode == "Final") {
+        newCompetition.eliminated = 0
+      }
 
       const competitionId = await competitionsModel.add(newCompetition);
       const NewCompetition = await competitionsModel.getById(competitionId);
@@ -105,6 +125,7 @@ class CompetitionsController {
     try {
       const { id } = req.params;
       const {
+        categorie,
         name,
         type,
         discipline,
@@ -113,11 +134,13 @@ class CompetitionsController {
         location,
         description,
         mode,
+        eliminated,
         participants,
         rounds,
       } = req.body;
 
       if (
+        !categorie ||
         !name ||
         !type ||
         !discipline ||
@@ -131,9 +154,19 @@ class CompetitionsController {
       ) {
         return res.status(401).json({
           status: 401,
-          message: "Faltan propiedades escenciales para crear la competición.",
+          message: "Faltan propiedades escenciales para editar la competición.",
         });
       }
+      console.log(req.body)
+
+      const categorieView = await categoriesModel.getByName(categorie);
+      if (categorieView === undefined) {
+        return res.status(401).json({
+          status: 401,
+          message: "La Categoria no existe",
+        });
+      }
+
 
       if (type != "Torneo" && type != "Competición") {
         return res.status(401).json({
@@ -175,6 +208,8 @@ class CompetitionsController {
 
       // Creamos la nueva competicion editada:
       let newCompetitionEdit = {
+        categorie: categorie,
+        eliminated: Number(eliminated),
         name: name,
         type: type,
         discipline: discipline,
@@ -186,6 +221,10 @@ class CompetitionsController {
         participants: Number(participants),
         rounds: Number(rounds),
       };
+
+      if (mode == "Liga" || mode == "Final") {
+        newCompetitionEdit.eliminated = 0
+      }
 
       const competitionId = await competitionsModel.edit(
         newCompetitionEdit,

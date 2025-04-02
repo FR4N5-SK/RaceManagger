@@ -4,6 +4,8 @@ class CompetitionsModel {
   // Crear una nueva competición (listo)
   async add(competition) {
     const {
+      categorie,
+      eliminated,
       name,
       type,
       discipline,
@@ -17,8 +19,10 @@ class CompetitionsModel {
       results,
     } = competition;
     const sql =
-      "INSERT INTO competitions (name_competition, type_competition, discipline_competition, dateStart_competition, dateEnd_competition, location_competition, description_competition, mode_competition, participants_competition, rounds_competition, results_competition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO competitions (categorie_competition, eliminated_competition, name_competition, type_competition, discipline_competition, dateStart_competition, dateEnd_competition, location_competition, description_competition, mode_competition, participants_competition, rounds_competition, results_competition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
+      categorie,
+      eliminated,
       name,
       type,
       discipline,
@@ -60,6 +64,8 @@ class CompetitionsModel {
   // Editar una Competición (listo)
   async edit(competition, id) {
     const {
+      categorie,
+      eliminated,
       name,
       type,
       discipline,
@@ -72,8 +78,10 @@ class CompetitionsModel {
       rounds,
     } = competition;
     const sql =
-      "UPDATE competitions SET name_competition = ?, type_competition = ?, discipline_competition = ?, dateStart_competition = ?, dateEnd_competition = ?, location_competition = ?, description_competition = ?, mode_competition = ?, participants_competition = ?, rounds_competition = ? WHERE id_competition = ?";
+      "UPDATE competitions SET categorie_competition = ?, eliminated_competition = ?, name_competition = ?, type_competition = ?, discipline_competition = ?, dateStart_competition = ?, dateEnd_competition = ?, location_competition = ?, description_competition = ?, mode_competition = ?, participants_competition = ?, rounds_competition = ? WHERE id_competition = ?";
     const values = [
+      categorie,
+      eliminated,
       name,
       type,
       discipline,

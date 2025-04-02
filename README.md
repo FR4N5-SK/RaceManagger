@@ -27,3 +27,5 @@ Vesion V1.2:
 Contiene los siguientes cambios...
 
 - Agregamos el archivo de la base de datos Mysql
+
+## Proceso de Instalacion

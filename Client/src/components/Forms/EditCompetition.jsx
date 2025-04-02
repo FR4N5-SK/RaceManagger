@@ -6,9 +6,11 @@ import { alertInfo } from "../../alerts/alerts";
 import { Context } from "../../context/Context";
 
 export default function EditCompetition({competition}) {
-  const { peticionEditCompetition } = useContext(Context);
+  const { peticionEditCompetition, catOpt } = useContext(Context);
 
   const [values, setValues] = useState({
+    categorie: "",
+    eliminated: "",
     name: "",
     type: "",
     discipline: "",
@@ -24,6 +26,8 @@ export default function EditCompetition({competition}) {
   useEffect(() => {
     const load = (e) => {
       setValues({
+        categorie: competition.categorie_competition,
+        eliminated: competition.eliminated_competition,
         name: competition.name_competition,
         type: competition.type_competition,
         discipline: competition.discipline_competition,
@@ -69,7 +73,7 @@ export default function EditCompetition({competition}) {
   };
 
   const types = [
-    { text: "Competitición", value: "Competitición" },
+    { text: "Competición", value: "Competición" },
     { text: "Torneo", value: "Torneo" },
   ];
 
@@ -99,10 +103,12 @@ export default function EditCompetition({competition}) {
             label="Nombres"
           ></TEInput>
         </div>
-        <div>
+        <div className="flex flex-col">
           <TESelect
             data={types}
             name="type"
+            value={values.type}
+            preventFirstSelection
             onValueChange={(e) => {
               setValues({
                 ...values,
@@ -114,8 +120,25 @@ export default function EditCompetition({competition}) {
         </div>
         <div>
           <TESelect
+            data={catOpt}
+            name="categories"
+            value={values.categorie}
+            preventFirstSelection
+            onValueChange={(e) => {
+              setValues({
+                ...values,
+                ["categorie"]: e.value,
+              });
+            }}
+            label="Categorías"
+          />
+        </div>
+        <div className="flex flex-col">
+          <TESelect
             data={disciplines}
             name="discipline"
+            value={values.discipline}
+            preventFirstSelection
             onValueChange={(e) => {
               setValues({
                 ...values,
@@ -159,10 +182,12 @@ export default function EditCompetition({competition}) {
           ></TETextarea>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <div>
+          <div className="flex flex-col">
             <TESelect
               data={modes}
               name="mode"
+              value={values.mode}
+              preventFirstSelection
               onValueChange={(e) => {
                 setValues({
                   ...values,
@@ -183,15 +208,41 @@ export default function EditCompetition({competition}) {
             ></TEInput>
           </div>
         </div>
-        <div>
-          <TEInput
-            min={0}
-            type="number"
-            name="rounds"
-            value={values.rounds}
-            onChange={handleInputChange}
-            label="Rondas"
-          ></TEInput>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <TEInput
+              min={0}
+              type="number"
+              name="rounds"
+              value={values.rounds}
+              onChange={handleInputChange}
+              label="Rondas"
+            ></TEInput>
+          </div>
+          {values.mode === "Eliminación Directa" ? (
+            <div>
+              <TEInput
+                min={0}
+                type="number"
+                name="eliminated"
+                value={values.eliminated}
+                onChange={handleInputChange}
+                label="Eliminar por Ronda"
+              ></TEInput>
+            </div>
+          ) : (
+            <div>
+              <TEInput
+                min={0}
+                disabled
+                type="number"
+                name="eliminated"
+                value={values.eliminated}
+                onChange={handleInputChange}
+                label="Eliminar por Ronda"
+              ></TEInput>
+            </div>
+          )}
         </div>
         <div>
           <TEInput

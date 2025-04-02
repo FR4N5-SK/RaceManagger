@@ -115,6 +115,8 @@ export default function NewAthlete({setModal}) {
             <TESelect
               data={sex}
               name="sex"
+              preventFirstSelection
+              label="Sexo"
               onValueChange={(e) => {
                 setValues({
                   ...values,
@@ -137,6 +139,8 @@ export default function NewAthlete({setModal}) {
           <TESelect
             data={nations}
             name="nation"
+            preventFirstSelection
+            label="Nacionalidad"
             onValueChange={(e) => {
               setValues({
                 ...values,

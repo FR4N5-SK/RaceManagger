@@ -13,6 +13,8 @@ export function ContextoProvider(props) {
   const [athletes, setAthletes] = useState([]);
   const [competitions, setCompetitions] = useState([]);
   const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [catOpt, setCatOpt] = useState([])
 
   // Peticion a la api para iniciar sesion
   function peticionLogin(data) {
@@ -161,6 +163,46 @@ export function ContextoProvider(props) {
             setLoading(false);
             alertConfirm(response.message);
             setCompetitions(response.data);
+            resolve(true);
+          }
+          if (response.status < 410 && response.status >= 400) {
+            alertError(response.message);
+            setLoading(false);
+            resolve(false);
+          }
+          if (response.status < 510 && response.status >= 500) {
+            alertError(response.message);
+            setLoading(false);
+            resolve(false);
+          }
+        });
+    });
+  }
+
+  // Peticion a la api para traer todos las categorias
+  function peticionAllCategories(data) {
+    return new Promise((resolve, reject) => {
+      fetch(peticiones.allCategories, {
+        mode: "cors",
+        method: "GET", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .catch((error) => console.error("Error:", error))
+        .then((response) => {
+          if (response.status < 210 && response.status >= 200) {
+            setCategories(response.data);
+            let newCats = [];
+            response.data.forEach((cat) => {
+              newCats.push({
+                text: cat.name_categorie,
+                value: cat.name_categorie,
+              });
+            });
+            setCatOpt(newCats);
             resolve(true);
           }
           if (response.status < 410 && response.status >= 400) {
@@ -475,9 +517,7 @@ export function ContextoProvider(props) {
             .catch((error) => console.error("Error:", error))
             .then((response) => {
               if (response.status < 210 && response.status >= 200) {
-                const newState = users.filter(
-                  (item) => item.id_user !== id
-                );
+                const newState = users.filter((item) => item.id_user !== id);
                 setUsers(newState);
                 alertConfirm(response.message);
                 resolve(true);
@@ -513,6 +553,8 @@ export function ContextoProvider(props) {
         setCompetitions,
         users,
         setUsers,
+        categories,
+        catOpt,
         peticionLogin,
         peticionRecovery,
         peticionRegister,
@@ -525,7 +567,8 @@ export function ContextoProvider(props) {
         peticionAddCompetition,
         peticionDeleteCompetition,
         peticionEditCompetition,
-        peticionDeleteUser
+        peticionDeleteUser,
+        peticionAllCategories
       }}
     >
       {props.children}
