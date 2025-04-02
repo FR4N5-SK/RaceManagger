@@ -4,6 +4,7 @@ import Navigation from "../components/Navigation";
 import Atleta from "../../public/Atleta.jpg";
 import Users from "../../public/usuarios.png";
 import Competencias from "../../public/Torneo.jpg";
+import Categoria from "../../public/Categorias.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Admin() {
@@ -54,6 +55,19 @@ export default function Admin() {
                   "Administra los usuarios que están registrados en la app, donde puedes ver o eliminar cada usuario según lo necesitado."
                 }
                 img={Users}
+                button={"Administrar"}
+              />
+            </li>
+            <li>
+              <CardOption
+                buttonFunction={(e) => {
+                  navigate("/admin/categories")
+                }}
+                title={"Administrador de Categorías"}
+                content={
+                  "Administra las categorías que están registradas en la app, donde puedes ver, editar agregar o eliminar cada atleta según lo necesitado."
+                }
+                img={Categoria}
                 button={"Administrar"}
               />
             </li>

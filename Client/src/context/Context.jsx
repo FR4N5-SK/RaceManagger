@@ -203,6 +203,7 @@ export function ContextoProvider(props) {
               });
             });
             setCatOpt(newCats);
+            setLoading(false);
             resolve(true);
           }
           if (response.status < 410 && response.status >= 400) {
@@ -285,6 +286,38 @@ export function ContextoProvider(props) {
     });
   }
 
+    // Peticion a la api para agregar categoria
+    function peticionAddCategorie(data) {
+      return new Promise((resolve, reject) => {
+        fetch(peticiones.AddCategorie, {
+          mode: "cors",
+          method: "POST", // or 'PUT'
+          body: JSON.stringify(data), // data can be `string` or {object}!
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .catch((error) => console.error("Error:", error))
+          .then((response) => {
+            if (response.status < 210 && response.status >= 200) {
+              alertConfirm(response.message);
+              setCategories([...categories, response.data]);
+              resolve(true);
+            }
+            if (response.status < 410 && response.status >= 400) {
+              alertError(response.message);
+              resolve(false);
+            }
+            if (response.status < 510 && response.status >= 500) {
+              alertError(response.message);
+              resolve(false);
+            }
+          });
+      });
+    }
+
   // Peticion a la api para editar atleta
   function peticionEditAthlete(data, id) {
     return new Promise((resolve, reject) => {
@@ -355,6 +388,53 @@ export function ContextoProvider(props) {
                   (item) => item.id_athlete !== id
                 );
                 setAthletes(newState);
+                alertConfirm(response.message);
+                resolve(true);
+              }
+              if (response.status < 410 && response.status >= 400) {
+                alertError(response.message);
+                resolve(false);
+              }
+              if (response.status < 510 && response.status >= 500) {
+                alertError(response.message);
+                resolve(false);
+              }
+            });
+        }
+      });
+    });
+  }
+
+  // Peticion a la api para eliminar Categoría
+  function peticionDeleteCategorie(id) {
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        icon: "question",
+        title: "Eliminar",
+        text: "¿Estas seguro que quieres eliminar la Categoría?",
+        showDenyButton: true,
+        confirmButtonText: "Cancelar",
+        denyButtonText: `Confirmar`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire("Cancelado", "Ten mas cuidado la proxima vez", "info");
+        } else if (result.isDenied) {
+          fetch(peticiones.DeleteCategorie + id, {
+            mode: "cors",
+            method: "DELETE", // or 'PUT'
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error:", error))
+            .then((response) => {
+              if (response.status < 210 && response.status >= 200) {
+                const newState = categories.filter(
+                  (item) => item.id_categorie !== id
+                );
+                setCategories(newState);
                 alertConfirm(response.message);
                 resolve(true);
               }
@@ -568,7 +648,9 @@ export function ContextoProvider(props) {
         peticionDeleteCompetition,
         peticionEditCompetition,
         peticionDeleteUser,
-        peticionAllCategories
+        peticionAllCategories,
+        peticionAddCategorie,
+        peticionDeleteCategorie
       }}
     >
       {props.children}

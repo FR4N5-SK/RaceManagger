@@ -28,4 +28,9 @@ Contiene los siguientes cambios...
 
 - Agregamos el archivo de la base de datos Mysql
 
+Version V1.3:
+Contiene los siguientes cambios...
+
+- Desarrollo del Panel de Administrador, Funcionalidad CRUD de Categorías (Frontend)
+
 ## Proceso de Instalacion

@@ -12,39 +12,7 @@ import Admin from './admin/Admin';
 import AdminAthletes from './admin/views/AdminAthletes';
 import AdminCompetitions from './admin/views/AdminCompetitions';
 import AdminUsers from './admin/views/AdminUsers';
-
-function Default() {
-  return (
-    <></>
-  )
-}
-
-function example() {
-  return (
-    <h2 className="text-3xl font-bold underline">
-      {" "}
-      Recuperación clave
-    </h2>
-  )
-}
-
-function example2() {
-  return (
-    <h2 className="text-3xl font-bold underline">
-      {" "}
-      Registro
-    </h2>
-  )
-}
-
-function example3() {
-  return (
-    <h2 className="text-3xl font-bold underline">
-      {" "}
-      Inicio
-    </h2>
-  )
-}
+import AdminCategories from './admin/views/AdminCategories';
 
 /*Enrutador de la web*/
 const router = createBrowserRouter([
@@ -79,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/users",
     element: <ProtectedRoute adminComponent={AdminUsers} defaultComponent={Login} userComponent={Landing} />
+  },
+  {
+    path: "/admin/categories",
+    element: <ProtectedRoute adminComponent={AdminCategories} defaultComponent={Login} userComponent={Landing} />
   },
   {
     path: "*",
