@@ -3,7 +3,7 @@ import React from "react";
 export default function CardAthlete({athlete}) {
   return (
     <div className="rounded-lg flex flex-col bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
-      <h5 className="mb-4 text-lg lg:text-xl font-medium font-Oswald leading-tight text-azul-cielo ">
+      <h5 className="mb-4 text-lg lg:text-xl font-medium font-Oswald leading-tight text-azul-cielo text-center">
         {athlete.name_athlete} {athlete.lastname_athlete}
       </h5>
       <div className="grid grid-cols-2">

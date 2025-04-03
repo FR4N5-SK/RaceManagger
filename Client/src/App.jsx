@@ -1,7 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { TERipple, TEInput } from 'tw-elements-react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Login from './views/Login';
@@ -13,6 +9,7 @@ import AdminAthletes from './admin/views/AdminAthletes';
 import AdminCompetitions from './admin/views/AdminCompetitions';
 import AdminUsers from './admin/views/AdminUsers';
 import AdminCategories from './admin/views/AdminCategories';
+import Athletes from './views/Athletes';
 
 /*Enrutador de la web*/
 const router = createBrowserRouter([
@@ -31,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/inicio",
     element: <ProtectedRoute defaultComponent={Login} userComponent={Landing} adminComponent={Landing} />,
+  },
+  {
+    path: "/atletas",
+    element: <ProtectedRoute defaultComponent={Login} userComponent={Athletes} adminComponent={Athletes} />,
   },
   {
     path: "/admin",

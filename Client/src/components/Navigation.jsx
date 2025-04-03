@@ -73,7 +73,7 @@ export default function Navigation() {
               </Link>
             </li>
             <li>
-              <Link className="hover:text-naranja-brillante duration-300 transition-all">
+              <Link to={"/atletas"} className="hover:text-naranja-brillante duration-300 transition-all">
                 Atletas
               </Link>
             </li>
