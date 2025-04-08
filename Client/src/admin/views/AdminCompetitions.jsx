@@ -8,6 +8,7 @@ import Modal from "../../components/Modal";
 import { TERipple } from "tw-elements-react";
 import EditCompetition from "../../components/Forms/EditCompetition";
 import CardCompetition from "../../components/cards/CardCompetition";
+import CardCompeFull from "../../components/cards/CardCompeFull";
 
 export default function AdminCompetitions() {
   const { loading, setLoading, peticionAllCompetitions, competitions, peticionDeleteCompetition, peticionAllCategories } =
@@ -104,7 +105,7 @@ export default function AdminCompetitions() {
                                   buttonStyle={
                                     "inline-block mr-2 rounded bg-primary px-4 pb-[5px] pt-[6px] text-[10px] font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-300 ease-in-out hover:bg-azul-cielo hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                                   }
-                                  size={"auto"}
+                                  size={"lg"}
                                   title={"Competición Seleccionada"}
                                   component={<CardCompetition competition={item} />}
                                 />

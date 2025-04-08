@@ -29,6 +29,7 @@ export default function Filter({ dataSelect, oldData, setData, title, keyFiltro 
           <div className="h-full w-full">
             <div>
               <TESelect
+              className="bg-white"
                 data={dataSelect}
                 name="filter"
                 preventFirstSelection

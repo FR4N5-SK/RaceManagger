@@ -10,6 +10,7 @@ import AdminCompetitions from './admin/views/AdminCompetitions';
 import AdminUsers from './admin/views/AdminUsers';
 import AdminCategories from './admin/views/AdminCategories';
 import Athletes from './views/Athletes';
+import Competitions from './views/Competitions';
 
 /*Enrutador de la web*/
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/atletas",
     element: <ProtectedRoute defaultComponent={Login} userComponent={Athletes} adminComponent={Athletes} />,
+  },
+  {
+    path: "/competiciones",
+    element: <ProtectedRoute defaultComponent={Login} userComponent={Competitions} adminComponent={Competitions} />,
   },
   {
     path: "/admin",

@@ -139,6 +139,7 @@ export default function NewAthlete({setModal}) {
           <TESelect
             data={nations}
             name="nation"
+            search
             preventFirstSelection
             label="Nacionalidad"
             onValueChange={(e) => {

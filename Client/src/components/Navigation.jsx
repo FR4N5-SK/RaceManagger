@@ -68,7 +68,7 @@ export default function Navigation() {
               </Link>
             </li>
             <li>
-              <Link className="hover:text-naranja-brillante duration-300 transition-all">
+              <Link to={"/competiciones"} className="hover:text-naranja-brillante duration-300 transition-all">
                 Competiciones
               </Link>
             </li>

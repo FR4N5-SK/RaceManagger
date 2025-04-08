@@ -18,10 +18,8 @@ export default function NewCompetition({setModal}) {
     dateEnd: "",
     location: "",
     description: "",
-    mode: "",
     participants: "",
-    eliminated: "",
-    rounds: ""
+    status: "Sin empezar"
   });
   const [catOpt, setCatOpt] = useState([])
 
@@ -38,7 +36,7 @@ export default function NewCompetition({setModal}) {
     };
     
     load()
-  }, [])
+  }, [categories])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,15 +62,15 @@ export default function NewCompetition({setModal}) {
     if (response) {
         setValues({
           name: "",
+          categorie: "",
           type: "",
           discipline: "",
           dateStart: "",
           dateEnd: "",
           location: "",
           description: "",
-          mode: "",
           participants: "",
-          rounds: "",
+          status: "Sin empezar"
         });
         return
     }
@@ -81,14 +79,8 @@ export default function NewCompetition({setModal}) {
   };
 
   const types = [
-    { text: "Competitición", value: "Competitición" },
+    { text: "Competición", value: "Competición" },
     { text: "Torneo", value: "Torneo" },
-  ];
-
-  const modes = [
-    { text: "Liga", value: "Liga" },
-    { text: "Eliminación Directa", value: "Eliminación Directa" },
-    { text: "Final", value: "Final" },
   ];
 
   const disciplines = [
@@ -189,68 +181,15 @@ export default function NewCompetition({setModal}) {
             rows={4}
           ></TETextarea>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <TESelect
-              data={modes}
-              name="mode"
-              clearBtn
-              preventFirstSelection
-              onValueChange={(e) => {
-                setValues({
-                  ...values,
-                  ["mode"]: e.value,
-                });
-              }}
-              label="Modo"
-            />
-          </div>
-          <div>
-            <TEInput
-              min={0}
-              type="number"
-              name="participants"
-              value={values.participants}
-              onChange={handleInputChange}
-              label="Participantes"
-            ></TEInput>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <TEInput
-              min={0}
-              type="number"
-              name="rounds"
-              value={values.rounds}
-              onChange={handleInputChange}
-              label="Rondas"
-            ></TEInput>
-          </div>
-          {values.mode === "Eliminación Directa" ? (
-            <div>
-              <TEInput
-                min={0}
-                type="number"
-                name="eliminated"
-                value={values.eliminated}
-                onChange={handleInputChange}
-                label="Eliminar por Ronda"
-              ></TEInput>
-            </div>
-          ) : (
-            <div>
-              <TEInput
-                min={0}
-                disabled
-                type="number"
-                name="eliminated"
-                value={values.eliminated}
-                onChange={handleInputChange}
-                label="Eliminar por Ronda"
-              ></TEInput>
-            </div>
-          )}
+        <div>
+          <TEInput
+            min={0}
+            type="number"
+            name="participants"
+            value={values.participants}
+            onChange={handleInputChange}
+            label="Participantes"
+          ></TEInput>
         </div>
         <div>
           <TEInput

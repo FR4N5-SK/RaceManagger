@@ -5,7 +5,6 @@ class CompetitionsModel {
   async add(competition) {
     const {
       categorie,
-      eliminated,
       name,
       type,
       discipline,
@@ -13,16 +12,15 @@ class CompetitionsModel {
       dateEnd,
       location,
       description,
-      mode,
       participants,
-      rounds,
-      results,
+      status,
+      enrolled,
     } = competition;
     const sql =
-      "INSERT INTO competitions (categorie_competition, eliminated_competition, name_competition, type_competition, discipline_competition, dateStart_competition, dateEnd_competition, location_competition, description_competition, mode_competition, participants_competition, rounds_competition, results_competition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO competitions (categorie_competition, status_competition, name_competition, type_competition, discipline_competition, dateStart_competition, dateEnd_competition, location_competition, description_competition, participants_competition, enrolled_competition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
       categorie,
-      eliminated,
+      status,
       name,
       type,
       discipline,
@@ -30,10 +28,8 @@ class CompetitionsModel {
       dateEnd,
       location,
       description,
-      mode,
       participants,
-      rounds,
-      results,
+      enrolled,
     ];
     try {
       const response = await query(sql, values);
@@ -41,6 +37,112 @@ class CompetitionsModel {
       return newCompetitionId;
     } catch (error) {
       console.log("Hubo un error al crear la Competición:", error);
+      throw error;
+    }
+  }
+
+  // Registrar atleta a una competicion (listo)
+  async registerAthlete(data) {
+    const { id_atleta, id_competicion, enrolled_competition } = data;
+    console.log(enrolled_competition);
+    const sql =
+      "INSERT INTO enrolled (id_enrolled, id_athlete, id_competition) VALUES (NULL, ?, ?)";
+    const sql2 =
+      "UPDATE competitions SET enrolled_competition = ? WHERE id_competition = ?";
+    const values = [id_atleta, id_competicion];
+    const values2 = [enrolled_competition, id_competicion];
+    try {
+      const response = await query(sql, values);
+      const response2 = await query(sql2, values2);
+      const newRelacionId = response.insertId;
+      return newRelacionId;
+    } catch (error) {
+      console.log(
+        "Hubo un error al crear la Inscripción del Atleta a la Competición:",
+        error
+      );
+      throw error;
+    }
+  }
+
+  // Verificar si ya esta inscrito el atleta (listo)
+  async verifyRegister(data) {
+    const { id_atleta, id_competicion } = data;
+    const sql = `SELECT * FROM enrolled WHERE id_athlete = ? AND id_competition = ?`;
+    const values = [id_atleta, id_competicion];
+    try {
+      const [result] = await query(sql, values);
+      return result;
+    } catch (error) {
+      console.log(
+        "Hubo un error al crear la Inscripción del Atleta a la Competición:",
+        error
+      );
+      throw error;
+    }
+  }
+
+  // Verificar si ya esta inscrito el atleta (listo)
+  async verifyResult(data) {
+    const { id_atleta, id_competicion } = data;
+    const sql = `SELECT * FROM results WHERE id_athlete = ? AND id_competition = ?`;
+    const values = [id_atleta, id_competicion];
+    try {
+      const [result] = await query(sql, values);
+      return result;
+    } catch (error) {
+      console.log(
+        "Hubo un error al verificar si esta registrado ya un tiempo de este usuario:",
+        error
+      );
+      throw error;
+    }
+  }
+
+  // agregar un tiempo realizado (listo)
+  async addTime(data) {
+    const { id_atleta, id_competicion, time_result } = data;
+    const sql = `INSERT INTO results (id_athlete, id_competition, time_result) VALUES (?, ?, ?)`;
+    const values = [id_atleta, id_competicion, time_result];
+    try {
+      const response = await query(sql, values);
+      const newResultId = response.insertId;
+      return newResultId;
+    } catch (error) {
+      console.log(
+        "Hubo un error al registrar el tiempo del competidor:",
+        error
+      );
+      throw error;
+    }
+  }
+
+  async allRegistrados(idCompeticion) {
+    const sql = `SELECT A.id_enrolled, b.id_athlete, B.name_athlete, B.lastname_athlete, B.nation_athlete FROM enrolled A JOIN athletes B ON A.id_athlete = B.id_athlete WHERE id_competition = ?`;
+    const values = [idCompeticion];
+    try {
+      const result = await query(sql, values);
+      return result;
+    } catch (error) {
+      console.log(
+        "Hubo un error al listar los atletas registrados de cada competición:",
+        error
+      );
+      throw error;
+    }
+  }
+
+  async allTimes(idCompeticion) {
+    const sql = `SELECT A.id_result, b.id_athlete, B.name_athlete, B.lastname_athlete, B.nation_athlete, A.time_result, A.id_competition FROM results A JOIN athletes B ON A.id_athlete = B.id_athlete WHERE id_competition = ?`;
+    const values = [idCompeticion];
+    try {
+      const result = await query(sql, values);
+      return result;
+    } catch (error) {
+      console.log(
+        "Hubo un error al listar los timpos realizados por los atletas en la competicion:",
+        error
+      );
       throw error;
     }
   }
@@ -65,7 +167,6 @@ class CompetitionsModel {
   async edit(competition, id) {
     const {
       categorie,
-      eliminated,
       name,
       type,
       discipline,
@@ -73,15 +174,12 @@ class CompetitionsModel {
       dateEnd,
       location,
       description,
-      mode,
       participants,
-      rounds,
     } = competition;
     const sql =
-      "UPDATE competitions SET categorie_competition = ?, eliminated_competition = ?, name_competition = ?, type_competition = ?, discipline_competition = ?, dateStart_competition = ?, dateEnd_competition = ?, location_competition = ?, description_competition = ?, mode_competition = ?, participants_competition = ?, rounds_competition = ? WHERE id_competition = ?";
+      "UPDATE competitions SET categorie_competition = ?, name_competition = ?, type_competition = ?, discipline_competition = ?, dateStart_competition = ?, dateEnd_competition = ?, location_competition = ?, description_competition = ?, participants_competition = ? WHERE id_competition = ?";
     const values = [
       categorie,
-      eliminated,
       name,
       type,
       discipline,
@@ -89,9 +187,7 @@ class CompetitionsModel {
       dateEnd,
       location,
       description,
-      mode,
       participants,
-      rounds,
       id,
     ];
     try {
@@ -99,6 +195,20 @@ class CompetitionsModel {
       return response.affectedRows > 0;
     } catch (error) {
       console.log(`No se pudo editar la competicion ${name}:`, error);
+      throw error;
+    }
+  }
+
+    // Editar Status de una competicion (listo)
+  async editStatus(status, id) {
+    const sql =
+      "UPDATE competitions SET status_competition = ? WHERE id_competition = ?";
+    const values = [status, id];
+    try {
+      const response = await query(sql, values);
+      return response.affectedRows > 0;
+    } catch (error) {
+      console.log(`No se pudo editar la competicion`, error);
       throw error;
     }
   }

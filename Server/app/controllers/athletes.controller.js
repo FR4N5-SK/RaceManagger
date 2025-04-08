@@ -139,10 +139,18 @@ class AthletesController {
         data: athleteId,
       });
     } catch (error) {
-      res.status(500).json({
-        status: 500,
-        message: `Error al eliminar el Atleta: ${error.message}`,
-      });
+      if (error.message == "Cannot delete or update a parent row: a foreign key constraint fails (`racemanagger_db`.`enrolled`, CONSTRAINT `athlete` FOREIGN KEY (`id_athlete`) REFERENCES `athletes` (`id_athlete`))") {
+        res.status(400).json({
+          status: 400,
+          message: `No puedes Eliminar un Atleta que esta inscrito en una competicion`,
+        }); 
+      } else {
+        res.status(500).json({
+          status: 500,
+          message: `Error al eliminar el Atleta: ${error.message}`,
+        });
+      }
+
     }
   }
 

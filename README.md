@@ -33,4 +33,9 @@ Contiene los siguientes cambios...
 
 - Desarrollo del Panel de Administrador, Funcionalidad CRUD de Categorías (Frontend)
 
+Version V1.4:
+Contiene los siguientes cambios...
+
+- Desarrollo de la pantalla de Atletas para poder ver los atletas registrados, buscar y filtrarlos, Funcionalid(Frontend)
+
 ## Proceso de Instalacion

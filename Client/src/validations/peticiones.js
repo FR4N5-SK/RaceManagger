@@ -16,6 +16,12 @@ const endpoints = {
     DeleteCompetition: "http://localhost:3062/api/competitions/delete/",
     DeleteCategorie: "http://localhost:3062/api/categories/delete/",
     DeleteUser: "http://localhost:3062/api/users/delete/",
+    allAthletesInCompetitions: "http://localhost:3062/api/competitions/all/competition-athlete/",
+    allTimesInCompetitions: "http://localhost:3062/api/competitions/all/result-athlete/",
+    addAthletesInCompetitions: "http://localhost:3062/api/competitions/register/competition-athlete/",
+    addTimesInCompetitions: "http://localhost:3062/api/competitions/register/result-athlete/",
+    editStatusCompetitions: "http://localhost:3062/api/competitions/edit/status/",
+    resultsInCompetitions: "http://localhost:3062/api/competitions/register/result-athlete/",
 }
 
 export default endpoints

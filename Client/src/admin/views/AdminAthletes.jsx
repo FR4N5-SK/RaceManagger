@@ -52,7 +52,7 @@ export default function AdminAthletes() {
         <main className="w-full">
           <div className="h-[8vh]"></div>
 
-          <section className="h-[92vh] p-4 py-12 lg:p-12 lg:py-20">
+          <section className="min-h-[92vh] p-4 py-12 lg:p-12 lg:py-20">
             <h3 className="font-Oswald font-bold text-lg lg:text-xl mb-1.5">
               Listado de Atletas Registrados en el Sistema
             </h3>
@@ -61,7 +61,7 @@ export default function AdminAthletes() {
               buttonStyle={`inline-block mb-4 rounded bg-naranja-brillante px-4 pb-[5px] pt-[6px] text-[11px] font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-300 ease-in-out hover:bg-azul-cielo hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]`}
               size={"auto"}
               title={"Agregar Nuevo Atleta"}
-              component={<NewAthlete />}
+              component={<NewAthlete></NewAthlete>}
             />
             <div className="flex flex-col mb-4">
               <div className="overflow-x-auto">

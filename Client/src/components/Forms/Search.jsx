@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { searchData } from "../../validations/middlewares";
 import { alertConfirm } from "../../alerts/alerts";
 
-export default function Search({ oldData, setData, title, keySearch }) {
+export default function Search({ oldData, setData, title, keySearch, label }) {
   const [search, setSearch] = useState("");
 
   
@@ -34,12 +34,12 @@ export default function Search({ oldData, setData, title, keySearch }) {
         <div className="flex gap-2 w-full">
           <div className="h-full w-full">
             <TEInput
-              className="h-full w-full"
+              className="h-full w-full bg-white"
               type="text"
               name="search"
               value={search}
               onChange={handleInputChange}
-              label="Nombre"
+              label={label}
             ></TEInput>
           </div>
 

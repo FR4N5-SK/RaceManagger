@@ -10,7 +10,6 @@ export default function EditCompetition({competition}) {
 
   const [values, setValues] = useState({
     categorie: "",
-    eliminated: "",
     name: "",
     type: "",
     discipline: "",
@@ -18,16 +17,13 @@ export default function EditCompetition({competition}) {
     dateEnd: "",
     location: "",
     description: "",
-    mode: "",
-    participants: "",
-    rounds: ""
+    participants: ""
   });
 
   useEffect(() => {
     const load = (e) => {
       setValues({
         categorie: competition.categorie_competition,
-        eliminated: competition.eliminated_competition,
         name: competition.name_competition,
         type: competition.type_competition,
         discipline: competition.discipline_competition,
@@ -35,9 +31,7 @@ export default function EditCompetition({competition}) {
         dateEnd: competition.dateEnd_competition.substr(0, 16),
         location: competition.location_competition,
         description: competition.description_competition,
-        mode: competition.mode_competition,
-        participants: competition.participants_competition,
-        rounds: competition.rounds_competition
+        participants: competition.participants_competition
       })
     };
     
@@ -75,12 +69,6 @@ export default function EditCompetition({competition}) {
   const types = [
     { text: "Competición", value: "Competición" },
     { text: "Torneo", value: "Torneo" },
-  ];
-
-  const modes = [
-    { text: "Liga", value: "Liga" },
-    { text: "Eliminación Directa", value: "Eliminación Directa" },
-    { text: "Final", value: "Final" },
   ];
 
   const disciplines = [
@@ -181,69 +169,17 @@ export default function EditCompetition({competition}) {
             rows={4}
           ></TETextarea>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col">
-            <TESelect
-              data={modes}
-              name="mode"
-              value={values.mode}
-              preventFirstSelection
-              onValueChange={(e) => {
-                setValues({
-                  ...values,
-                  ["mode"]: e.value,
-                });
-              }}
-              label="Modo"
-            />
-          </div>
-          <div>
-            <TEInput
-              min={0}
-              type="number"
-              name="participants"
-              value={values.participants}
-              onChange={handleInputChange}
-              label="Participantes"
-            ></TEInput>
-          </div>
+        <div>
+          <TEInput
+            min={0}
+            type="number"
+            name="participants"
+            value={values.participants}
+            onChange={handleInputChange}
+            label="Participantes"
+          ></TEInput>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <TEInput
-              min={0}
-              type="number"
-              name="rounds"
-              value={values.rounds}
-              onChange={handleInputChange}
-              label="Rondas"
-            ></TEInput>
-          </div>
-          {values.mode === "Eliminación Directa" ? (
-            <div>
-              <TEInput
-                min={0}
-                type="number"
-                name="eliminated"
-                value={values.eliminated}
-                onChange={handleInputChange}
-                label="Eliminar por Ronda"
-              ></TEInput>
-            </div>
-          ) : (
-            <div>
-              <TEInput
-                min={0}
-                disabled
-                type="number"
-                name="eliminated"
-                value={values.eliminated}
-                onChange={handleInputChange}
-                label="Eliminar por Ronda"
-              ></TEInput>
-            </div>
-          )}
-        </div>
+
         <div>
           <TEInput
             type="text"
